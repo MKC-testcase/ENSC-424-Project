@@ -26,3 +26,5 @@ if __name__ == '__main__':
 #as a note to Pycharm git application
 #you can commit the file usig the left hand tab commit under default changelist
 # make sure to add a comment about the changes you are making the commit button is below it
+
+#Then under the top tool tab VCS go to git and push, that will add your changes to the git branch that you got the code from
