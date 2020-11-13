@@ -118,8 +118,8 @@ class media_interpret:
             self.draw_boxes()
 
             for clas in self.class_ids:
-                print(str(self.classes[self.class_ids[clas]]))  # this is to check all the classes in considered
-                if object == self.classes[self.class_ids[clas]]:
+                print(str(self.classes[clas]))  # this is to check all the classes in considered
+                if object == self.classes[clas]:
                     if self.vidSetup == True:
                         self.vid_convert(self.vidSetup)
                         break
