@@ -13,7 +13,7 @@ class media_interpret:
     def __init__(self):
         self.fps = 0
         self.frame_count = 0
-        self.net = cv2.dnn.readNet('yolov4.weights', 'yolov4.cfg')
+        self.net = cv2.dnn.readNet('yolov4-training_8000.weights', 'yolov4-training.cfg')
         self.classes = []
         self.boxes = []
         self.class_ids = []
@@ -35,7 +35,7 @@ class media_interpret:
         """Input char(video name) to pass into the program"""
         self.vidSetup = False
         try:
-            with open('coco.names', 'r') as f:
+            with open('coco2.names', 'r') as f:
                 self.classes = f.read().splitlines()
             self.cap = cv2.VideoCapture(video_name) #change the road.mp4 to video_name
             self.frame_count = int(self.cap.get(cv2.CAP_PROP_FRAME_COUNT))
@@ -48,27 +48,25 @@ class media_interpret:
         self.boxes = []
         self.class_ids = []
         self.confidences = []
-        #dimension_storage = []
+        dimension_storage = []
         for output in self.layerOutputs:
             for detection in output:
                 scores = detection[5:]
                 class_id = np.argmax(scores)
                 confidence = scores[class_id]
                 if confidence > 0.5:
+                    #our confidence is so low due to the dataset that we put together not being completely acccurate
                     center_x = int(detection[0] * self.width)
                     center_y = int(detection[1] * self.height)
+                    dimension_storage = []
+                    temp_w = int(detection[2] * self.width)
+                    temp_h = int(detection[3] * self.height)
+                    dimension_storage.append(center_x - int(temp_w / 2))
+                    dimension_storage.append(center_y - int(temp_h / 2))
+                    dimension_storage.append(temp_w)
+                    dimension_storage.append(temp_h)
 
-                    #dimension_storage.append(detection[2] * self.width)
-                    #dimension_storage.append(detection[3] * self.height)
-                    #dimension_storage.append(center_x - int(dimension_storage[0] / 2))
-                    #dimension_storage.append(center_y - int(dimension_storage[1] / 2))
-                    w = int(detection[2] * self.width)
-                    h = int(detection[3] * self.height)
-
-                    x = int(center_x - w / 2)
-                    y = int(center_y - h / 2)
-
-                    self.boxes.append([x, y, w, h])
+                    self.boxes.append(dimension_storage)
                     self.confidences.append(float(confidence))
                     self.class_ids.append(class_id)
 
@@ -180,7 +178,7 @@ if __name__ == '__main__':
     test = media_interpret()
     test.setupFold()
     test.readVideo('road.mp4')
-    test.image_runthrough('car', vidName='test_vid.avi')
+    test.image_runthrough('deer', vidName='test2_vid.avi')
     test.proper_end()
 
     #for the future purhaps explore the possibility to compress the jpg files automatically --> store as txt file
