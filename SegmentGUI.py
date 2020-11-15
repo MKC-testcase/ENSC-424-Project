@@ -1,4 +1,4 @@
-from tkinter import filedialog, Tk, Label, Button, StringVar, OptionMenu, Entry, END
+from tkinter import filedialog, Tk, Label, Button, StringVar, OptionMenu, Entry, END, E, W
 import ENSC424projectClass
 import ntpath
 import os
@@ -15,6 +15,24 @@ class Application:
         self.master = master
         master.title("AI Video Segmentation")
 
+        master.grid_columnconfigure(0, weight=1)
+        master.grid_columnconfigure(1, weight=1)
+        master.grid_columnconfigure(2, weight=1)
+        master.grid_columnconfigure(3, weight=1)
+        master.grid_columnconfigure(4, weight=1)
+
+        master.grid_rowconfigure(0, weight=1)
+        master.grid_rowconfigure(1, weight=1)
+        master.grid_rowconfigure(2, weight=1)
+        master.grid_rowconfigure(3, weight=1)
+        master.grid_rowconfigure(4, weight=1)
+        master.grid_rowconfigure(5, weight=1)
+        master.grid_rowconfigure(6, weight=1)
+        master.grid_rowconfigure(7, weight=1)
+        master.grid_rowconfigure(8, weight=1)
+
+
+
         self.class_lbl = Label(master, text="Choose animal of interest")
         self.class_lbl.grid(row=1, column=2)
 
@@ -28,22 +46,24 @@ class Application:
         self.File_lbl.grid(row=4, column=2)
 
         self.ent = Entry(master, font=5, state='readonly')
-        self.ent.grid(row=5, column=2)
+        self.ent.grid(row=5, column=1,columnspan = 2, sticky = W+E)
 
         self.b1 = Button(master, text="Browse", font=40, command=self.browsefile)
-        self.b1.grid(row=5, column=4)
+        self.b1.grid(row=5, column=4,sticky=W)
 
         self.Folder_lbl = Label(master, text="Select Save Folder")
         self.Folder_lbl.grid(row=6, column=2)
 
         self.ent2 = Entry(master, font=5, state='readonly')
-        self.ent2.grid(row=7, column=2)
+        self.ent2.grid(row=7, column=1,columnspan = 2, sticky = W+E)
 
         self.b2 = Button(master, text="Browse", font=40, command=self.browsedirect)
-        self.b2.grid(row=7, column=4)
+        self.b2.grid(row=7, column=4,sticky=W)
 
         self.button = Button(master, text="OK", command=self.ok)
         self.button.grid(row=8, column=2)
+
+
 
     def browsefile(self):
         filename = filedialog.askopenfilename(filetypes=(("mp4 file", "*.mp4"), ("All files", " *.* "),))
