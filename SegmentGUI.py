@@ -2,6 +2,7 @@ from tkinter import filedialog, Tk, Label, Button, StringVar, OptionMenu, Entry,
 import ENSC424projectClass
 import ntpath
 import os
+import shutil
 
 OPTIONS = [
 "Bear",
@@ -86,10 +87,12 @@ class Application:
         print(file)
         Video.readVideo(file)
         (filename, ext) = os.path.splitext(ntpath.basename(file))
+        temp_filename = filename + ".txt"
         filename = filename+"_segmented.avi"
         filepath = self.ent2.get() + filename
         filepath.encode('unicode_escape')
         Video.image_runthrough(self.variable.get(), vidName=filepath)
+        #Video.output_interest_timestamp(temp_filename)
         Video.proper_end()
 
 
