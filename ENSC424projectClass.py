@@ -183,7 +183,7 @@ class media_interpret:
         else:
             print("You have not enabled the video segmentation option")
 
-    def output_interest_timestamp(self, txt_file):
+    def output_interest_timestamp(self, txt_file, path):
         count = 0
         new_file = open(txt_file, "w+")
         for read in self.in_frame:
@@ -202,9 +202,9 @@ class media_interpret:
                 new_file.write("object of interest in {}:{}:{}--{}:{}:{} \n".format(hour1,min1,sec1,hour2,min2,sec2))
         new_file.close()
         current_dir = os.getcwd()
-        path = "{}/videos/{}".format(current_dir, txt_file)
+        new_path = "{}/{}".format(path, txt_file)
         current_dir = "{}/{}".format(current_dir,txt_file)
-        shutil.move(current_dir, path)
+        shutil.move(current_dir, new_path)
 
     def proper_end(self):
         self.cap.release()

@@ -92,7 +92,7 @@ class Application:
         filepath = self.ent2.get() + "/"+filename
         filepath.encode('unicode_escape')
         Video.image_runthrough(self.variable.get(), vidName=filepath)
-        #Video.output_interest_timestamp(temp_filename)
+        Video.output_interest_timestamp(temp_filename)
         Video.proper_end()
         self.master.quit()
 
