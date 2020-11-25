@@ -87,10 +87,11 @@ class Application:
         Video.readVideo(file)
         (filename, ext) = os.path.splitext(ntpath.basename(file))
         filename = filename+"_segmented.avi"
-        filepath = self.ent2.get() + filename
+        filepath = self.ent2.get() + "/"+filename
         filepath.encode('unicode_escape')
         Video.image_runthrough(self.variable.get(), vidName=filepath)
         Video.proper_end()
+        self.master.quit()
 
 
 def main():
