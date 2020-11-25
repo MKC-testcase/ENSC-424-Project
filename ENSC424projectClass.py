@@ -42,7 +42,7 @@ class media_interpret:
         """Input char(video name) to pass into the program"""
         self.vidSetup = False
         try:
-            with open('coco2.names', 'r') as f:
+            with open('coco.names', 'r') as f:
                 self.classes = f.read().splitlines()
             self.cap = cv2.VideoCapture(video_name) #change the road.mp4 to video_name
             self.frame_count = int(self.cap.get(cv2.CAP_PROP_FRAME_COUNT))
