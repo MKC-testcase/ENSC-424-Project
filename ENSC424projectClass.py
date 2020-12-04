@@ -236,8 +236,8 @@ if __name__ == '__main__':
     test = media_interpret()
     test.setupFold()
     test.readVideo('road.mp4')
-    test.image_runthrough('deer', vidName='test3_vid.avi')
-    test.output_interest_timestamp('test3_vid.txt')
+    test.image_runthrough('Deer', vidName='test3_vid.avi')
+    test.output_interest_timestamp('test3_vid.txt', 'D:/Marcus/ENSC_424_aspg/ENSC_project_py/ENSC_424_project_Marcus/ENSC-424-Project/videos')
     test.proper_end()
 
     #for the future purhaps explore the possibility to compress the jpg files automatically --> store as txt file
