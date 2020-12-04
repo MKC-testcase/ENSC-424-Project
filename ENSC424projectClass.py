@@ -42,7 +42,7 @@ class media_interpret:
         """Input char(video name) to pass into the program"""
         self.vidSetup = False
         try:
-            with open('coco2.names', 'r') as f:
+            with open('coco.names', 'r') as f:
                 self.classes = f.read().splitlines()
             self.cap = cv2.VideoCapture(video_name) #change the road.mp4 to video_name
             self.frame_count = int(self.cap.get(cv2.CAP_PROP_FRAME_COUNT))
@@ -121,22 +121,42 @@ class media_interpret:
             self.classify_boxes()
             self.draw_boxes()
 
-            for clas in self.class_ids:
-                print(str(self.classes[clas]))  # this is to check all the classes in considered
-                if object == self.classes[clas]:
-                    if self.vidSetup == True:
-                        self.vid_convert(self.vidSetup)
-                        #keeping track of the time frames that object is in frame
-                        if self.fobj == False:
-                            self.in_frame.append(x)
-                            self.fObj = True
-                        break
-                    else:
-                        self.acquired_frame(count, 'test2')
-                        break
-                if clas != self.class_ids[-1] and self.fobj == True:
-                    self.fobj == False
-                    self.in_frame.append(x)
+            indexes = cv2.dnn.NMSBoxes(self.boxes, self.confidences, 0.5, 0.4)
+            if len(indexes) > 0:
+                for i in indexes.flatten():
+                    if object == self.classes[self.class_ids[i]]:
+                        if self.vidSetup == True:
+                            self.vid_convert(self.vidSetup)
+                            # keeping track of the time frames that object is in frame
+                            if self.fobj == False:
+                                self.in_frame.append(x)
+                                self.fObj = True
+                            break
+                        else:
+                            self.acquired_frame(count, 'test2')
+                            break
+                    elif self.fobj == True:
+                        self.fobj == False
+                        self.in_frame.append(x)
+
+
+
+            # for clas in self.class_ids:
+            #     print(str(self.classes[clas]))  # this is to check all the classes in considered
+            #     if object == self.classes[clas]:
+            #         if self.vidSetup == True:
+            #             self.vid_convert(self.vidSetup)
+            #             #keeping track of the time frames that object is in frame
+            #             if self.fobj == False:
+            #                 self.in_frame.append(x)
+            #                 self.fObj = True
+            #             break
+            #         else:
+            #             self.acquired_frame(count, 'test2')
+            #             break
+            #     if clas != self.class_ids[-1] and self.fobj == True:
+            #         self.fobj == False
+            #         self.in_frame.append(x)
             count = count + 1
 
             if (x == self.frame_count):
